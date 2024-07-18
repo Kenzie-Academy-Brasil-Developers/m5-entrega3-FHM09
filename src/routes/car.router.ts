@@ -23,9 +23,13 @@ carRouter.get('/', (req, res) => {
 carRouter.get('/:id', NotFound.execute, (req, res) => {
    carController.findOne(req, res);
 });
-carRouter.patch('/:id', NotFound.execute, BodyValidator.execute(carUpdateSchema), (req, res) => {
-   carController.update(req, res);
-});
+carRouter.patch('/:id',
+   BodyValidator.execute(carUpdateSchema),
+   NotFound.execute,
+   (req, res) => {
+      carController.update(req, res);
+   }
+);
 carRouter.delete('/:id', NotFound.execute, (req, res) => {
    carController.delete(req, res);
 });

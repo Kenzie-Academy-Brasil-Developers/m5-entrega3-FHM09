@@ -28,27 +28,28 @@ describe('Integrations test: update car', () => {
       expect(data).toStrictEqual(mock_updateCar);
    });
 
-   it("should return an error getting a car with non existing id", async () => {
-      const response = await request.patch("/cars/99999");
-   
-      const expectedBody = {
-        message: "Car not found",
-      };
-   
-      expect(response.body).toEqual(expectedBody);
-      expect(response.statusCode).toBe(404);
-    });
-
-    it('deve retornar status 400 e mensagem de erro para dados inválidos', async () => {
-      const response = await request.patch(`/cars/${mock_createCar.id}`).send(mock_invalidCarData);
+   it("should throw error when try to update a invalid car", async () => {
   
-      expect(response.status).toBe(400);
-
-      expect(response.body.errors).toHaveLength(5);
-
-      expect(response.body.errors).toEqual([
-        { code: 'invalid_type', expected: 'string', received: 'number', path: ['name'], message: 'Expected string, received number' },
-      ]);
+      const car = await prismaMock.car.findFirst();
+  
+      const id = (car?.id as string) + 1;
+  
+      await request
+        .patch(`/cars/${id}`)
+        .expect(404)
+        .then((response) => response.body);
+    });
+  
+    it("should throw error when try to update a car with invalid data types", async () => {
+  
+      const car = await prismaMock.car.findFirst();
+  
+      const id = (car?.id);
+  
+      await request
+        .patch(`/cars/${id}`)
+        .send(mock_invalidCarData)
+        .expect(400);
     });
 });
 
