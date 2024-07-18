@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 import { prisma } from '../database/prisma';
 import { carSchema } from '../schemas/car.schema';
-import { TCarCreate, TCar } from '../interfaces/car.interface';
+import { TCarCreate, TCar, TCarUpdate } from '../interfaces/car.interface';
 
 
 @injectable()
@@ -25,7 +25,7 @@ export class CarService {
       return car;
    };
 
-   update = async (data: TCarCreate, id: string): Promise<Partial<TCarCreate>> => {
+   update = async (data: TCarCreate, id: string): Promise<TCarUpdate> => {
       const car = await prisma.car.update({
          where: { id },
          data

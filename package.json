@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "dotenv -e .env.dev -- tsnd --respawn src/server.ts",
     "migrate:dev": "dotenv -e .env.dev -- npx prisma migrate dev",
-    "test": "jest",
+    "test": "dotenv -e .env.test -- jest --verbose --runInBand --config jest.config.ts",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev"
   },
   "keywords": [],

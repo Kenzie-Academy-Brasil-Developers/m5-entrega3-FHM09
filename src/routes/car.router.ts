@@ -3,7 +3,7 @@ import { container } from 'tsyringe';
 import { CarController } from '../controllers/car.controller';
 import { NotFound } from '../middlewares/not.found.middleware';
 import { BodyValidator } from '../middlewares/body.validator.middleware';
-import { carCreateSchema } from '../schemas/car.schema';
+import { carCreateSchema, carUpdateSchema } from '../schemas/car.schema';
 import { CarService } from '../services/car.service';
 
 
@@ -23,7 +23,7 @@ carRouter.get('/', (req, res) => {
 carRouter.get('/:id', NotFound.execute, (req, res) => {
    carController.findOne(req, res);
 });
-carRouter.patch('/:id', NotFound.execute, BodyValidator.execute(carCreateSchema), (req, res) => {
+carRouter.patch('/:id', NotFound.execute, BodyValidator.execute(carUpdateSchema), (req, res) => {
    carController.update(req, res);
 });
 carRouter.delete('/:id', NotFound.execute, (req, res) => {

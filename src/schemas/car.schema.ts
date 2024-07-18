@@ -10,3 +10,4 @@ export const carSchema = z.object({
 });
 
 export const carCreateSchema = carSchema.omit({ id: true });
+export const carUpdateSchema = carCreateSchema.partial();
